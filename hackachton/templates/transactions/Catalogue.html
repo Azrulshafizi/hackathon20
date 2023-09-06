@@ -118,7 +118,7 @@ text-align: left
             <p>Total Price: ${{ '%.2f' % total_amount }}</p>
         </div>
     <div class="cart-actions">
-        <a class="close-cart-btn" id="close-cart-btn" href="/Shinghak/cart">Close Cart &amp; Continue Shopping</a>
+        <a class="close-cart-btn" id="close-cart-btn" href="/transactions/cart">Close Cart &amp; Continue Shopping</a>
     </div>
 </div>
 
@@ -130,7 +130,7 @@ text-align: left
             <img src="{{  url_for('static', filename='image2/P1-White.webp')}} " alt="Product 1">
             <h2>Shiftwalk Air Max 90</h2>
             <p>Price: $10.99</p>
-            <form action="/Shinghak/Product" method="get">
+            <form action="/transactions/Product" method="get">
                 <input type="submit" value="View Details">
             </form>
         </div>
@@ -139,7 +139,7 @@ text-align: left
             <img src="{{  url_for('static', filename='image2/P2-Blue.jpeg')}}" alt="Product 2">
             <h2>Shiftwalk SB Dunk</h2>
             <p>Price: $24.99</p>
-            <form action="/Shinghak/Product2" method="get">
+            <form action="/transactions/Product2" method="get">
                 <input type="submit" value="View Details">
             </form>
         </div>
@@ -148,7 +148,7 @@ text-align: left
             <img src="{{  url_for('static', filename='image2/P3-Blue.webp')}}" alt="Product 3">
             <h2>Shiftwalk Air Force 1</h2>
             <p>Price: $32.50</p>
-            <form action="/Shinghak/Product3" method="get">
+            <form action="/transactions/Product3" method="get">
                 <input type="submit" value="View Details">
             </form>
         </div>

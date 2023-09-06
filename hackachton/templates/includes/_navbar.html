@@ -25,7 +25,7 @@
 
           {% if member %}
           <li class="nav-item">
-          <a class="nav-link" style="color: #000; opacity: 0.7;" href="/Shinghak/Catalogues/{{ member.get_user_id() }}">PRODUCT</a>
+          <a class="nav-link" style="color: #000; opacity: 0.7;" href="/transactions/Catalogues/{{ member.get_user_id() }}">PRODUCT</a>
         </li>
 
           <li class="nav-item dropdown">
@@ -33,25 +33,25 @@
               SUPPORT
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/asher/ContactUs_m/{{ member.get_user_id() }}">CONTACT US</a></li>
-            <li><a class="dropdown-item" href="/asher/review_m/{{ member.get_user_id() }}">REVIEW</a></li>
+            <li><a class="dropdown-item" href="/customer_support/ContactUs_m/{{ member.get_user_id() }}">CONTACT US</a></li>
+            <li><a class="dropdown-item" href="/customer_support/review_m/{{ member.get_user_id() }}">REVIEW</a></li>
 <!--            <li><hr class="dropdown-divider"></li>-->
-            <li><a class="dropdown-item" href="/asher/faq_m/{{ member.get_user_id() }}">FAQ</a></li>
+            <li><a class="dropdown-item" href="/customer_support/faq_m/{{ member.get_user_id() }}">FAQ</a></li>
           </ul>
           </li>
           {% else %}
           <li class="nav-item">
-          <a class="nav-link" style="color: #000; opacity: 0.7;" href="/Shinghak/Catalogue">PRODUCT</a>
+          <a class="nav-link" style="color: #000; opacity: 0.7;" href="/transactions/Catalogue">PRODUCT</a>
         </li>
            <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" style="color: #000; opacity: 0.7; " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               SUPPORT
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/asher/ContactUs">CONTACT US</a></li>
-            <li><a class="dropdown-item" href="/asher/review">REVIEW</a></li>
+            <li><a class="dropdown-item" href="/customer_support/ContactUs">CONTACT US</a></li>
+            <li><a class="dropdown-item" href="/customer_support/review">REVIEW</a></li>
 <!--            <li><hr class="dropdown-divider"></li>-->
-            <li><a class="dropdown-item" href="/asher/faq">FAQ</a></li>
+            <li><a class="dropdown-item" href="/customer_support/faq">FAQ</a></li>
           </ul>
           </li>
 
@@ -69,7 +69,7 @@
 
 
         {% if staff %}
-       <a href="/Azrul/StaffLogin"><button class="btn btn-outline-danger"  type="submit">
+       <a href="/account_management/StaffLogin"><button class="btn btn-outline-danger"  type="submit">
             LOGOUT
         </button>
         </a>
@@ -83,8 +83,8 @@
     My Account
   </button>
   <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="/Azrul/profile/{{member.get_user_id()}}">Profile</a></li>
-    <li><a class="dropdown-item" href="/Azrul/logout">Logout</a></li>
+    <li><a class="dropdown-item" href="/account_management/profile/{{member.get_user_id()}}">Profile</a></li>
+    <li><a class="dropdown-item" href="/account_management/logout">Logout</a></li>
 
   </ul>
 </div>
@@ -94,10 +94,10 @@
 
 
             {% else %}
-        <button class="btn" type="submit"><a class="nav-link" style="color: #000; opacity: 0.7; " href="/Azrul/login">LOG IN</a></button>
+        <button class="btn" type="submit"><a class="nav-link" style="color: #000; opacity: 0.7; " href="/account_management/login">LOG IN</a></button>
 
           <button class="btn " type="submit">
-              <a class="nav-link" style="color: #000; opacity: 0.7; " href="/Azrul/StaffLogin">STAFF</a>
+              <a class="nav-link" style="color: #000; opacity: 0.7; " href="/account_management/StaffLogin">STAFF</a>
           </button>
 
 

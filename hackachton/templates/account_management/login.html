@@ -44,7 +44,7 @@
          {{ render_field(login.password, class="form-control") }}
     </div>
     <p></p>
-        <a href="/Azrul/forgotpassword">forgot password?</a><br>
+        <a href="/account_management/forgotpassword">forgot password?</a><br>
 <button type="submit" onclick="showIncorrectLoginMsg()">Login</button>
         {% if get_flashed_messages(category_filter=["error"])[0] %}
 <div class="alert alert-danger">
@@ -91,7 +91,7 @@
   </div>
 </div>
 
-        <a href="/Azrul/CreateMember"><button type="button" class="btn btn-success" >Sign Up Now</button></a>
+        <a href="/account_management/CreateMember"><button type="button" class="btn btn-success" >Sign Up Now</button></a>
     </div>
   </div>
 </div>

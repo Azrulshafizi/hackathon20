@@ -7,13 +7,6 @@ from members import member, Address,Payment,Product
 from staff_login import Staff_Login
 import staff,Customer
 
-
-from twilio.rest import Client
-
-import os
-
-
-
 # from check import member_login
 
 
@@ -27,7 +20,7 @@ StaffLogin = None
 
 account_sid = 'ACf9b4b88a7f93c743ee05e26ea74363ad'
 auth_token = 'a9169f73d55799bd2771cc7e3cb3d321'
-client = Client(account_sid, auth_token)
+# client = Client(account_sid, auth_token)
 
 import random
 import string
@@ -58,8 +51,8 @@ def send_otp():
 #CFD02BF436E630DC4794E32AD3CC7DBC25EB
 # app.config['MAIL_SERVER'] = 'smtp.elasticemail.com'
 # app.config['MAIL_PORT'] = 2525
-# app.config['MAIL_USERNAME'] = 'azrulshafizi25@gmail.com'
-# app.config['MAIL_SENDER'] = 'azrulshafizi25@gmail.com'
+# app.config['MAIL_USERNAME'] = 'account_managementshafizi25@gmail.com'
+# app.config['MAIL_SENDER'] = 'account_managementshafizi25@gmail.com'
 # app.config['MAIL_PASSWORD'] = 'CFD02BF436E630DC4794E32AD3CC7DBC25EB'
 # app.config['MAIL_USE_TLS'] = True
 # app.config['MAIL_USE_SSL'] = False
@@ -84,7 +77,7 @@ def home():
 
 
 
-@app.route('/Azrul/forgotpassword', methods=['GET','POST'])
+@app.route('/account_management/forgotpassword', methods=['GET','POST'])
 def forgotpassword():
     getphonenumber = getphone_number(request.form)
     getemails = getemail(request.form)
@@ -107,7 +100,7 @@ def forgotpassword():
             member_list.append(member)
         for member in member_list:
             if member.get_gender() == getemail:
-                return render_template('azrul/reset.html')
+                return render_template('account_management/reset.html')
             else:
                 flash('incorrect','error')
 
@@ -120,13 +113,13 @@ def forgotpassword():
 
             if get_email == member.get_email():
                 return redirect(url_for('reset',id=member.get_user_id()))
-    return render_template('Azrul/forgotpassword.html',form=getphonenumber,email=getemails)
+    return render_template('account_management/forgotpassword.html',form=getphonenumber,email=getemails)
 
 
 
 
 
-@app.route('/Azrul/reset/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/reset/<int:id>/', methods=['GET','POST'])
 def reset(id):
     reset = resetpassword(request.form)
 
@@ -145,16 +138,16 @@ def reset(id):
         db['member'] = member_dict
         db.close()
         print('hell')
-        return render_template('Azrul/send.html')
+        return render_template('account_management/send.html')
     else:
-        return render_template('Azrul/reset.html',member=member_dict.get(id),reset=reset)
+        return render_template('account_management/reset.html',member=member_dict.get(id),reset=reset)
 
 
-@app.route('/Azrul/send',methods=['GET','POST'])
+@app.route('/account_management/send',methods=['GET','POST'])
 def send():
-    return render_template('Azrul/send.html')
+    return render_template('account_management/send.html')
 
-@app.route('/Azrul/login', methods=['GET','POST'])
+@app.route('/account_management/login', methods=['GET','POST'])
 def login():
     form = loginpage(request.form)
     if request.method == "POST" and form.validate():
@@ -175,10 +168,10 @@ def login():
                     return render_template('home.html', member=memberlogin)
                 else:
                     flash('Password incorrect!', 'error')
-                    return render_template('Azrul/login.html', login=form)
+                    return render_template('account_management/login.html', login=form)
             else:
                 flash('Phone number not register!', 'error')
-    return render_template('Azrul/login.html',login=form)
+    return render_template('account_management/login.html',login=form)
 
 
 
@@ -194,11 +187,11 @@ def login():
 #         member = member_dict.get(key)
 #         member_list.append(member)
 #
-#     return render_template('azrul/successful.html',member = memberlogin)
+#     return render_template('account_management/successful.html',member = memberlogin)
 
 
 
-@app.route('/Azrul/profile/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/profile/<int:id>/', methods=['GET','POST'])
 def profile(id):
 
     member_dict = {}
@@ -213,16 +206,16 @@ def profile(id):
     member = member_dict.get(id)
     if member.get_user_id() == id:
         memberlogin = member
-        return render_template('Azrul/profile.html', member_list=member_list, member_id=id, member=memberlogin)
+        return render_template('account_management/profile.html', member_list=member_list, member_id=id, member=memberlogin)
     else:
-        return render_template('Azrul/login.html')
+        return render_template('account_management/login.html')
 
-@app.route('/Azrul/logout', methods=['GET'])
+@app.route('/account_management/logout', methods=['GET'])
 def logout():
     memberlogin = None
     return redirect(url_for('home',member=memberlogin))
 
-@app.route('/Azrul/CreateMember', methods=['GET','POST'])
+@app.route('/account_management/CreateMember', methods=['GET','POST'])
 def create_member():
     create_member_form = CreateMemberForm(request.form)
 
@@ -266,10 +259,10 @@ def create_member():
         print(members.get_first_name(), members.get_last_name(), "was stored in storage.db successfully with user_id == ", members.get_user_id())
         db.close()
         return redirect(url_for('login'))
-    return render_template('Azrul/CreateMember.html', form=create_member_form)
+    return render_template('account_management/CreateMember.html', form=create_member_form)
 
 
-@app.route('/Azrul/UpdateMemberProfile/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/UpdateMemberProfile/<int:id>/', methods=['GET','POST'])
 def UpdateMemberProfile(id):
     global memberlogin
     UpdateMember = CreateMemberForm(request.form)
@@ -293,7 +286,7 @@ def UpdateMemberProfile(id):
         db['member'] = member_dict
         db.close()
         print('successful')
-        return render_template('Azrul/Profile.html',member=member)
+        return render_template('account_management/Profile.html',member=member)
     else:
         member = member_dict.get(id)
         UpdateMember.first_name.data = member.get_first_name()
@@ -305,11 +298,11 @@ def UpdateMemberProfile(id):
         UpdateMember.gender.data = member.get_gender()
         UpdateMember.image.data = member.get_image()
         memberlogin = member
-        return render_template('Azrul/UpdateMemberProfile.html',form=UpdateMember, member_id=id, member= memberlogin)
+        return render_template('account_management/UpdateMemberProfile.html',form=UpdateMember, member_id=id, member= memberlogin)
 
 
 
-@app.route('/Azrul/UpdateAddress/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/UpdateAddress/<int:id>/', methods=['GET','POST'])
 def Update_Address(id):
     address = addressform(request.form)
 
@@ -326,7 +319,7 @@ def Update_Address(id):
         db['member'] = member_dict
         db.close()
         print('success')
-        return render_template('Azrul/Profile.html',member=member)
+        return render_template('account_management/Profile.html',member=member)
     else:
         member_dict = {}
         db = shelve.open('storage.db', 'r')
@@ -340,10 +333,10 @@ def Update_Address(id):
         address.company.data = member.address.get_company()
         address.house.data = member.address.get_house()
         memberlogin = member
-        return render_template('Azrul/UpdateAddress.html',forms=address,member=memberlogin,member_id=id)
+        return render_template('account_management/UpdateAddress.html',forms=address,member=memberlogin,member_id=id)
 
 
-@app.route('/Azrul/UpdatePayment/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/UpdatePayment/<int:id>/', methods=['GET','POST'])
 def Update_Payment(id):
     Payment_form = paymentform(request.form)
 
@@ -372,11 +365,11 @@ def Update_Payment(id):
         Payment_form.expiry_date.data = member.payment.get_expiry_date()
 
         memberlogin = member
-        return render_template('Azrul/UpdatePayment.html',forms=Payment_form,member=memberlogin,member_id=id)
+        return render_template('account_management/UpdatePayment.html',forms=Payment_form,member=memberlogin,member_id=id)
 
 
 
-@app.route('/Azrul/UpdateMemberforstaff/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/UpdateMemberforstaff/<int:id>/', methods=['GET','POST'])
 def UpdateMemberforstaff(id):
     UpdateProfile = Updateprofileforstaff(request.form)
     if request.method == 'POST' and UpdateProfile.validate():
@@ -400,7 +393,7 @@ def UpdateMemberforstaff(id):
         db['member'] = member_dict
         db.close()
         print('success')
-        return redirect(url_for('Azrul/retrieveMember'))
+        return redirect(url_for('account_management/retrieveMember'))
     else:
         member_dict = {}
         db = shelve.open('storage.db', 'r')
@@ -420,9 +413,9 @@ def UpdateMemberforstaff(id):
         UpdateProfile.company.data = member.address.get_company()
         UpdateProfile.house.data = member.address.get_house()
         StaffLogin = staff
-        return render_template('azrul/UpdateMemberforstaff.html',form=UpdateProfile,staff=StaffLogin)
+        return render_template('account_management/UpdateMemberforstaff.html',form=UpdateProfile,staff=StaffLogin)
 
-@app.route('/Azrul/deleteUser/<int:id>/', methods=['POST'])
+@app.route('/account_management/deleteUser/<int:id>/', methods=['POST'])
 def deleteuser(id):
     member_dict = {}
     db = shelve.open('storage.db', 'w')
@@ -436,7 +429,7 @@ def deleteuser(id):
 
 
 
-@app.route('/Azrul/StaffLogin', methods=['GET','POST'])
+@app.route('/account_management/StaffLogin', methods=['GET','POST'])
 def StaffLogin():
     stafflogin = Staff_Login(request.form)
     print(staff.staff['STAFF_ID'])
@@ -450,14 +443,14 @@ def StaffLogin():
         if admin_staff == staff.staff['STAFF_ID']:
             if passwordstaff == staff.staff['password']:
                 StaffLogin = staff
-                return render_template('Azrul/admin.html',staff= StaffLogin)
+                return render_template('account_management/admin.html',staff= StaffLogin)
             else:
-                return render_template('Azrul/StaffLogin.html', stafflogin=stafflogin)
-    return render_template('Azrul/StaffLogin.html',stafflogin=stafflogin)
+                return render_template('account_management/StaffLogin.html', stafflogin=stafflogin)
+    return render_template('account_management/StaffLogin.html',stafflogin=stafflogin)
 
 
 
-@app.route('/Azrul/addressform/<int:id>/', methods=['GET','POST'])
+@app.route('/account_management/addressform/<int:id>/', methods=['GET','POST'])
 def address(id):
     address =addressform(request.form)
     member_dict = {}
@@ -481,13 +474,13 @@ def address(id):
     # for member in member_list:
     #     if member.get_user_id == id:
     #         member = member
-    return render_template('Azrul/addressform.html',form=address)
+    return render_template('account_management/addressform.html',form=address)
 
-@app.route('/Azrul/admin')
+@app.route('/account_management/admin')
 def admin():
-    return render_template('Azrul/admin.html',staff=staff)
+    return render_template('account_management/admin.html',staff=staff)
 
-@app.route('/Azrul/retrieveMember')
+@app.route('/account_management/retrieveMember')
 def retrieveMember():
     member_dict = {}
     db = shelve.open('storage.db', 'r')
@@ -500,7 +493,7 @@ def retrieveMember():
         member_list.append(members)
         print(members)
     StaffLogin = staff
-    return render_template('Azrul/retrieveMember.html', count=len(member_list), member_list=member_list,staff=StaffLogin)
+    return render_template('account_management/retrieveMember.html', count=len(member_list), member_list=member_list,staff=StaffLogin)
 
 # @app.route('/viewMember/<int:id>')
 # def ViewMember(id):
@@ -515,7 +508,7 @@ def retrieveMember():
 #         member_list.append(member)
 #     return render_template('viewMember.html',member_list=member_list,member_id=id)
 
-@app.route("/Azrul/viewmemberforstaff/<int:id>/",methods=['GET','POST'])
+@app.route("/account_management/viewmemberforstaff/<int:id>/",methods=['GET','POST'])
 def viewmemberforstaff(id):
     member_dict = {}
     db = shelve.open('storage.db', 'r')
@@ -526,13 +519,13 @@ def viewmemberforstaff(id):
     for key in member_dict:
         member = member_dict.get(key)
         member_list.append(member)
-    return render_template('Azrul/viewmemberforstaff.html', member_list=member_list, member_id=id)
+    return render_template('account_management/viewmemberforstaff.html', member_list=member_list, member_id=id)
 
 
 
 
 #Transaction code
-#shinghak
+#transactions
 
 # Sample product data (two products)
 # Sample product data (two products)
@@ -561,7 +554,7 @@ if not cart_data.get("cart"):
 
 
 
-@app.route("/Shinghak/form", methods=['GET', 'POST'])
+@app.route("/transactions/form", methods=['GET', 'POST'])
 def add_to_cart():
     global memberlogin
     product_name = request.form["product_name"]
@@ -574,7 +567,7 @@ def add_to_cart():
     return redirect(url_for('catalogue'))
 
 
-@app.route("/Shinghak/form1", methods=['GET', 'POST'])
+@app.route("/transactions/form1", methods=['GET', 'POST'])
 def add_to_cart1():
     product_name = request.form["product_name"]
     quantity = int(request.form["product_quantity"])
@@ -585,7 +578,7 @@ def add_to_cart1():
         cart_data.sync()  # Save the cart data to the Shelve database
     return redirect(url_for('catalogue',member=memberlogin))
 
-@app.route("/Shinghak/form2", methods=['GET', 'POST'])
+@app.route("/transactions/form2", methods=['GET', 'POST'])
 def add_to_cart2():
     global memberlogin
     product_name = request.form["product_name"]
@@ -598,7 +591,7 @@ def add_to_cart2():
     return redirect(url_for('catalogue',member=memberlogin))
 
 
-@app.route('/Shinghak/Product',methods=['GET','POST'])
+@app.route('/transactions/Product',methods=['GET','POST'])
 def Product():
     global memberlogin
     cart_items = {}
@@ -620,9 +613,9 @@ def Product():
                 "quantity": quantity,
                 "subtotal": subtotal,
             }
-    return render_template('Shinghak/Product.html', product1=product1, cart_items=cart_items, total_amount=total_amount,member=memberlogin)
+    return render_template('transactions/Product.html', product1=product1, cart_items=cart_items, total_amount=total_amount,member=memberlogin)
 
-@app.route('/Shinghak/Product2', methods=['GET', 'POST'])
+@app.route('/transactions/Product2', methods=['GET', 'POST'])
 def Product2():
     global memberlogin
     cart_items = {}
@@ -645,11 +638,11 @@ def Product2():
                 "quantity": quantity,
                 "subtotal": subtotal,
             }
-    return render_template('Shinghak/Product2.html', product2=product2, cart_items=cart_items, total_amount=total_amount,member=memberlogin)
+    return render_template('transactions/Product2.html', product2=product2, cart_items=cart_items, total_amount=total_amount,member=memberlogin)
 
 
 
-@app.route('/Shinghak/Product3', methods=['GET', 'POST'])
+@app.route('/transactions/Product3', methods=['GET', 'POST'])
 def Product3():
     global memberlogin
     cart_items = {}
@@ -672,9 +665,9 @@ def Product3():
                 "quantity": quantity,
                 "subtotal": subtotal,
             }
-    return render_template('Shinghak/Product3.html', product3=product3, cart_items=cart_items, total_amount=total_amount,member=memberlogin)
+    return render_template('transactions/Product3.html', product3=product3, cart_items=cart_items, total_amount=total_amount,member=memberlogin)
 
-@app.route('/Shinghak/Catalogue',methods=['GET', 'POST'])
+@app.route('/transactions/Catalogue',methods=['GET', 'POST'])
 def catalogue():
 
     cart_items = {}
@@ -697,9 +690,9 @@ def catalogue():
                 "quantity": quantity,
                 "subtotal": subtotal,
             }
-    return render_template('Shinghak/Catalogue.html', cart_items=cart_items, total_amount=total_amount, member=memberlogin)
+    return render_template('transactions/Catalogue.html', cart_items=cart_items, total_amount=total_amount, member=memberlogin)
 
-@app.route('/Shinghak/Catalogues/<int:id>',methods=['GET', 'POST'])
+@app.route('/transactions/Catalogues/<int:id>',methods=['GET', 'POST'])
 def catalogues(id):
     global memberlogin
     print(memberlogin)
@@ -735,9 +728,9 @@ def catalogues(id):
         if member.get_user_id() == id:
             memberlogin = member
             break
-    return render_template('Shinghak/Catalogue.html', cart_items=cart_items, total_amount=total_amount, member=memberlogin)
+    return render_template('transactions/Catalogue.html', cart_items=cart_items, total_amount=total_amount, member=memberlogin)
 
-@app.route("/Shinghak/cart")
+@app.route("/transactions/cart")
 def cart():
     cart_items = {}
     total_amount = 0.0
@@ -760,10 +753,10 @@ def cart():
                 "subtotal": subtotal,
             }
 
-    return render_template("Shinghak/CArt.html", cart_items=cart_items, total_amount=total_amount, member=memberlogin,form= address, form1=payment)
+    return render_template("transactions/CArt.html", cart_items=cart_items, total_amount=total_amount, member=memberlogin,form= address, form1=payment)
 
 
-@app.route("/Shinghak/cart/<int:id>", methods=['GET','POST'])
+@app.route("/transactions/cart/<int:id>", methods=['GET','POST'])
 def carts(id):
     cart_items = {}
     total_amount = 0.0
@@ -837,11 +830,11 @@ def carts(id):
 
     return render_template("home.html", cart_items=cart_items, total_amount=total_amount,member=memberlogin, form= address, form1=payment)
 
-@app.route('/Shinghak/address2')
+@app.route('/transactions/address2')
 def add():
-    return render_template('shinghak/addressform.html')
+    return render_template('transactions/addressform.html')
 
-@app.route('/Shinghak/delete_from_cart', methods=['POST'])
+@app.route('/transactions/delete_from_cart', methods=['POST'])
 def delete_from_cart():
     global memberlogin
     product_name = request.form["product_name"]
@@ -853,7 +846,7 @@ def delete_from_cart():
 
     return redirect(url_for('catalogue', member=memberlogin))
 
-# @app.route('/Shinghak/addressform/<int:id>/', methods=['GET','POST'])
+# @app.route('/transactions/addressform/<int:id>/', methods=['GET','POST'])
 # def address(id):
 #     address =addressform(request.form)
 #     payment= paymentform(request.form)
@@ -929,11 +922,11 @@ def load_inventory_data():
         return shelf.get('stock', [])
 
 
-@app.route('/Shinghak/Inventory')
+@app.route('/transactions/Inventory')
 def inventory():
     stock = load_inventory_data()
 
-    return render_template('Shinghak/Inventory.html', stock=stock)
+    return render_template('transactions/Inventory.html', stock=stock)
 
 
 product_stock = [
@@ -949,7 +942,7 @@ product_stock = [
 save_inventory_data(product_stock)
 
 
-@app.route('/Shinghak/update_quantity', methods=['POST'])
+@app.route('/transactions/update_quantity', methods=['POST'])
 def update_quantity():
     new_quantities = {}
     for key, value in request.form.items():
@@ -966,7 +959,7 @@ def update_quantity():
 
     return redirect(url_for('inventory'))
 
-@app.route('/Shinghak/delete_product/<int:index>', methods=['GET'])
+@app.route('/transactions/delete_product/<int:index>', methods=['GET'])
 def delete_product(index):
     stock = load_inventory_data()
 
@@ -976,7 +969,7 @@ def delete_product(index):
 
     return redirect(url_for('inventory'))
 
-@app.route('/Shinghak/add_product', methods=['GET', 'POST'])
+@app.route('/transactions/add_product', methods=['GET', 'POST'])
 def add_product():
     if request.method == 'POST':
         new_product = {
@@ -992,14 +985,14 @@ def add_product():
 
         return redirect(url_for('inventory'))
 
-    return render_template('Shinghak/AddProduct.html')
+    return render_template('transactions/AddProduct.html')
 
 
 
 
 
 #Customer Support
-#ASHER
+#customer_support
 # Define the chatbot responses here
 responses = {
     "hello": "Hi there!",
@@ -1048,7 +1041,7 @@ def get_chat_response():
 
 
 
-@app.route('/asher/ContactUs', methods=['GET', 'POST'])
+@app.route('/customer_support/ContactUs', methods=['GET', 'POST'])
 def create_contact():
     create_contact_form = CreateContactForm(request.form)
     if request.method == 'POST' and create_contact_form.validate():
@@ -1084,10 +1077,10 @@ def create_contact():
     for review in reviews:
         ratings[review['rating']] += 1
 
-    return render_template('asher/ContactUs.html', form=create_contact_form, reviews=reviews, average_rating=average_rating, ratings=ratings, total_ratings=total_ratings)
+    return render_template('customer_support/ContactUs.html', form=create_contact_form, reviews=reviews, average_rating=average_rating, ratings=ratings, total_ratings=total_ratings)
 
 
-@app.route('/asher/ContactUs_m/<int:id>', methods=['GET', 'POST'])
+@app.route('/customer_support/ContactUs_m/<int:id>', methods=['GET', 'POST'])
 def create_contacts(id):
     global memberlogin
     create_contact_form = CreateContactForm(request.form)
@@ -1142,12 +1135,12 @@ def create_contacts(id):
 
 
 
-    return render_template('asher/ContactUs.html', form=create_contact_form, reviews=reviews, average_rating=average_rating, ratings=ratings, total_ratings=total_ratings,member=memberlogin)
+    return render_template('customer_support/ContactUs.html', form=create_contact_form, reviews=reviews, average_rating=average_rating, ratings=ratings, total_ratings=total_ratings,member=memberlogin)
 
 
 
 
-@app.route('/asher/submit', methods=['POST'])
+@app.route('/customer_support/submit', methods=['POST'])
 def submit_review():
     name = request.form['name']
     rating = int(request.form['rating'])
@@ -1158,12 +1151,12 @@ def submit_review():
         reviews.append({'name': name, 'rating': rating, 'review': review})
         db['reviews'] = reviews
     flash('Review submitted successfully!', 'review_success')
-    return redirect('/asher/ContactUs')
+    return redirect('/customer_support/ContactUs')
 
 
 
 
-@app.route('/asher/review')
+@app.route('/customer_support/review')
 def display_reviews():
     try:
         with shelve.open('reviews.db') as db:
@@ -1179,16 +1172,16 @@ def display_reviews():
         for review in reviews:
             ratings[review['rating']] += 1
 
-        return render_template('asher/review.html', reviews=reviews, average_rating=average_rating, ratings=ratings,
+        return render_template('customer_support/review.html', reviews=reviews, average_rating=average_rating, ratings=ratings,
                                total_ratings=total_ratings)
 
     except Exception as e:
         print(f"Error while retrieving reviews: {e}")
-        return render_template('asher/review.html', reviews=[], average_rating=0, ratings={})
+        return render_template('customer_support/review.html', reviews=[], average_rating=0, ratings={})
 
 
 
-@app.route('/asher/retrieveCustomer')
+@app.route('/customer_support/retrieveCustomer')
 def retrieve_customer():
  customers_dict = {}
  db = shelve.open('storage1.db', 'r')
@@ -1202,11 +1195,11 @@ def retrieve_customer():
   customer = customers_dict.get(key)
   customers_list.append(customer)
 
- return render_template('asher/retrieveCustomer.html',
+ return render_template('customer_support/retrieveCustomer.html',
                         count=len(customers_list), customers_list=customers_list,filter_status=filter_status)
 
 
-@app.route('/asher/deleteUser/<int:id>', methods=['POST'])
+@app.route('/customer_support/deleteUser/<int:id>', methods=['POST'])
 def delete_user(id):
     customer_dict = {}
     db = shelve.open('storage1.db', 'w')
@@ -1225,13 +1218,13 @@ def delete_user(id):
             return redirect(url_for('retrieve_customer'))
         else:
             db.close()
-            return render_template('asher/retrieveCustomer.html', customers_list=customer_dict.values(), show_alert=True)
+            return render_template('customer_support/retrieveCustomer.html', customers_list=customer_dict.values(), show_alert=True)
 
     else:
         db.close()
-        return redirect(url_for('/asher/retrieve_customer'))
+        return redirect(url_for('/customer_support/retrieve_customer'))
 
-@app.route('/asher/update_status/<int:id>', methods=['POST'])
+@app.route('/customer_support/update_status/<int:id>', methods=['POST'])
 def update_status(id):
     customer_dict = {}
     db = shelve.open('storage1.db', 'w')
@@ -1266,7 +1259,7 @@ faq_data = {
     # Add more categories here
 }
 
-@app.route("/asher/faq")
+@app.route("/customer_support/faq")
 def faq_page():
     query = request.args.get('query')
     if query:
@@ -1275,17 +1268,17 @@ def faq_page():
             search_results[category] = {question: answer.replace('\n', '<br>') for question, answer in faqs.items() if query.lower() in question.lower()}
     else:
         search_results = None
-    return render_template("asher/faq.html", categories=faq_data.keys(), selected_category=None, faq_items=faq_data, search_results=search_results)
+    return render_template("customer_support/faq.html", categories=faq_data.keys(), selected_category=None, faq_items=faq_data, search_results=search_results)
 
 @app.route("/category/<category>")
 def faq_category(category):
     if category in faq_data:
-        return render_template("asher/faq.html", categories=faq_data.keys(), selected_category=category, faq_items=faq_data[category], search_results=None)
+        return render_template("customer_support/faq.html", categories=faq_data.keys(), selected_category=category, faq_items=faq_data[category], search_results=None)
     else:
         return "Category not found."
 
 # New search endpoint to handle search functionality
-@app.route("/asher/search")
+@app.route("/customer_support/search")
 def search():
     query = request.args.get('query')
     if query:
@@ -1297,7 +1290,7 @@ def search():
                 search_results[category] = category_results
     else:
         search_results = None
-    return render_template("asher/faq.html", categories=faq_data.keys(), selected_category=None, faq_items=faq_data,
+    return render_template("customer_support/faq.html", categories=faq_data.keys(), selected_category=None, faq_items=faq_data,
                            search_results=search_results)
 
 

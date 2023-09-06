@@ -138,10 +138,6 @@ img{
 }
 
 
-
-
-
-
 .sidebar-cart {
     width: 300px;
     background-color: #f4f4f4;
@@ -179,8 +175,11 @@ margin-bottom: 20px;
 }
 
 
-</style>
 
+}
+
+
+</style>
     <div class="sidebar-cart" id="sidebar-cart">
         <div class="cart-header">
             <h2>Your Cart</h2>
@@ -197,17 +196,14 @@ margin-bottom: 20px;
             </li>
 
 
-            <hr>
-
         {% endfor %}
     </ul>
         <div class="total">
             <p>Total Price: ${{ '%.2f' % total_amount }}</p>
         </div>
     <div class="cart-actions">
-        <a class="close-cart-btn" id="close-cart-btn" href="/Shinghak/cart">Close Cart &amp; Continue Shopping</a>
+        <a class="close-cart-btn" id="close-cart-btn" href="/transactions/cart">Close Cart &amp; Continue Shopping</a>
     </div>
-
 </div>
 
  <div class = "main-wrapper">
@@ -215,22 +211,23 @@ margin-bottom: 20px;
             <div class = "product-div">
                 <div class = "product-div-left">
                     <div class = "img-container">
-                        <img src = "{{  url_for('static', filename='image2/P1-White.webp')}}" alt = "watch">
+                        <img src = "{{  url_for('static', filename='image2/P2-Blue.jpeg')}}" alt = "watch">
                     </div>
 <!--                    <form method="POST" enctype="multipart/form-data" action="/upload">-->
 <!--                    <div class = "hover-container">-->
-<!--                        <div><img src = "static/image2/P1-Blue.Webp"></div>-->
-<!--                        <div><img src = "static/image2/P1-Green.Webp"></div>-->
-<!--                        <div><img src = "static/image2/P1-red.Webp"></div>-->
-<!--                        <div><img src = "static/image2/P1-White.Webp"></div>-->
-
+<!--                        <div><img src = "images/w1.png"></div>-->
+<!--                        <div><img src = "images/w2.png"></div>-->
+<!--                        <div><img src = "images/w3.png"></div>-->
+<!--                        <div><img src = "images/w4.png"></div>-->
+<!--                        <div><img src = "images/w5.png"></div>-->
 <!--                    </div>-->
 <!--                    </form>-->
                 </div>
                 <div class = "product-div-right">
-                    <form action="/Shinghak/form" method="POST" >
-                        <span class = "product-name" >{{ product1.name }}</span>
-                        <span class = "product-price">${{ '%.2f' % product1.price }}</span>
+                    <form action="/transactions/form1" method="POST" >
+                        <span class = "product-name" >{{ product2.name }}</span>
+
+                        <span class = "product-price">${{ '%.2f' % product2.price }}</span>
                     <div class = "product-rating">
                         <span><i class = "fas fa-star"></i></span>
                         <span><i class = "fas fa-star"></i></span>
@@ -240,15 +237,15 @@ margin-bottom: 20px;
                         <span>(350 ratings)</span>
                     </div>
 
-                    <p class = "product-description">Designed for serious runners, these shoes combine cutting-edge technology with sleek aesthetics. The lightweight yet durable construction offers exceptional comfort and support, while the advanced cushioning system absorbs impact, ensuring a smooth and responsive stride. Whether you're tackling your daily miles or aiming for a new personal best, these shoes will help you conquer the track with style and confidence.</p>
+                    <p class = "product-description">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae animi ad minima veritatis dolore. Architecto facere dignissimos voluptate fugit ratione molestias quis quidem exercitationem voluptas.Engineered for agility and power, these sneakers provide the ultimate grip and stability, enabling quick cuts and explosive jumps. The breathable mesh upper keeps your feet cool during intense games, while the responsive midsole technology offers unparalleled energy return. With a sleek and dynamic design, these sneakers are not just footwear; they're an extension of your prowess on the hardwood.</p>
 
-                    <span class = "product-color" >Colour available: {{ product1.colors }}</span>
+                    <span class = "product-color" >Colour available: {{ product2.colors }}</span>
 
-                    <span class = "product-size">Size available: {{ product1.sizes }}</span>
-
+                    <span class = "product-size">Size available: {{ product2.sizes }}</span>
                     <label>Quantity:</label>
                     <input type="number" name="product_quantity" value="1" min="1">
-                    <input type="hidden" name="product_name" value="{{ product1.name }}">
+                    <input type="hidden" name="product_name" value="{{ product2.name }}">
+
 
                     <div class = "btn-groups">
                         <button type = "submit" class = "add-cart-btn"  ><i class = "fas fa-wallet"></i>add to cart</button>
@@ -262,4 +259,34 @@ margin-bottom: 20px;
     </div>
 
 
+<script>
+
+    var productId = document.getElementById("product-id").value;
+    var productName = document.getElementById("product-name").value;
+    var productPrice = parseFloat(document.getElementById("product-price").value);
+    // ... other fields you want to include
+
+    document.getElementById("form-id").value = productId
+    document.getElementById("form-name").value = productName
+    document.getElementById("form-price").value = productPrice
+
+
+    console.log(document.getElementById("form-id").value)
+
+function addToCartAndRedirect() {
+
+
+    var data = {
+        product_id: productId,
+        product_name: productName,
+        product_price: productPrice,
+        // ... other fields
+    };
+    // Redirect to the cart page
+    window.location.href = '/CArt'; // Replace with the actual URL of your cart page
+}
+
+let cartForm = document.getElementsByTagName("Form")
+
+</script>
 {% endblock %}

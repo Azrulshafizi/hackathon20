@@ -37,7 +37,7 @@ h1 {
                 <strong>Quantity:</strong> {{ item.quantity }} <br>
                 <strong>Price:</strong> ${{ '%.2f' % item.price }} <br>
                 <strong>Price:</strong> ${{ '%.2f' % item.subtotal }} <br>
-                <form action="/Shinghak/delete_from_cart" method="post">
+                <form action="/transactions/delete_from_cart" method="post">
                 <input type="hidden" name="product_name" value="{{ product_name }}">
                 <button type="submit">Delete</button>
             </form>
@@ -57,7 +57,7 @@ h1 {
 <!--        <input type="submit" value="Checkout">-->
 <!--    </form>-->
     {% else %}
-        <form action="/Azrul/login" method="GET">
+        <form action="/account_management/login" method="GET">
         <input type="submit" value="Login">
     </form>
         {% endif %}
