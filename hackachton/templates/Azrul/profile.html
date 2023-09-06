@@ -1,0 +1,134 @@
+{% extends "base.html"%}
+{% block title %}Library Loan System - Profile{% endblock %}
+{% block content %}
+<div class="container1">
+<div class="container text-center" xmlns="http://www.w3.org/1999/html">
+<div class=" d-flex justify-content-center" style="margin-top:50px">
+<div class="border rounded" style="width:60%">
+
+<h1>Profile</h1>
+    {% for member in member_list %}
+    {% if member.get_user_id() == member_id %}
+<p>name: {{ member.get_first_name() }} {{  member.get_last_name()}}</p>
+<a>transaction history</a>
+    <hr>
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#Pesonal_Information">
+            Pesonal Information
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Address">
+            Address
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Payment">
+            Payment
+        </a>
+    </li>
+</ul>
+
+    <div class="tab-content">
+    <div class="tab-pane container active" id="Pesonal_Information">
+
+        <br>
+        <h2>Personal information</h2>
+    <div class="container text-center">
+  <div class="row align-items-start">
+    <div class="col">
+      <p>phone number: {{ member.get_phone_number() }} </p>
+    <p>email {{ member.get_email() }}</p>
+
+    </div>
+    <div class="col">
+      <p>Date of Birth: {{ member.get_date_of_birth() }}</p>
+        <p>Gender: {{ member.get_gender() }}</p>
+    </div>
+  </div>
+        <a  href="/Azrul/UpdateMemberProfile/{{ member.get_user_id() }}" >
+    <button>Update</button>
+</a>
+
+</div>
+
+
+
+
+
+
+    </div>
+    <div class="tab-pane container fade" id="Address">
+        <br>
+        <h2>Adress</h2>
+        <br>
+        {% if member.address.get_postal_code() == "" %}
+        <p>No Address</p>
+
+        {% else %}
+
+
+        <div class="row align-items-start">
+    <div class="col">
+      <p>country: {{ member.address.get_country() }} </p>
+    <p>Company: {{ member.address.get_company() }}</p>
+        <p>Postal Code: {{ member.address.get_postal_code() }}</p>
+
+    </div>
+    <div class="col">
+      <p>Address: {{ member.address.get_address() }}</p>
+        <p>House: {{ member.address.get_house() }}</p>
+    </div>
+  </div>
+
+
+        {% endif %}
+        <a  href="/Azrul/UpdateAddress/{{ member.get_user_id() }}" >
+    <button>Update Address</button>
+        </a>
+    </div>
+
+    <div class="tab-pane container fade" id="Payment">
+        <br>
+        <h2>Payment</h2>
+        <br>
+        {% if member.payment.get_card_name() == "" %}
+        <p>No Payment</p>
+        {% else %}
+        <p>Card Number: {{ member.payment.get_card_number() }} </p>
+
+
+
+         <div class="row align-items-start">
+    <div class="col">
+      <p>Card Name: {{ member.payment.get_card_name() }} </p>
+
+
+    </div>
+    <div class="col">
+    <p>Expiry Date: {{ member.payment.get_expiry_date() }} </p>
+
+    </div>
+  </div>
+
+        {% endif %}
+        <a  href="/Azrul/UpdatePayment/{{ member.get_user_id() }}" >
+    <button>Update Payment</button>
+        </a>
+
+    </div>
+</div>
+
+
+
+
+
+
+    {% endif %}
+    {% endfor %}
+</div>
+</div>
+</div>
+</div>
+{% endblock %}
